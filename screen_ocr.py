@@ -2,8 +2,8 @@ import keyboard
 import tempfile
 import pyperclip
 import subprocess
+import pytesseract
 import clipboard_monitor
-import pytesseract as pyte
 
 from PIL import ImageGrab
 
@@ -22,7 +22,7 @@ def on_clipboard_image_update():
 
     image = ImageGrab.grabclipboard()
 
-    result_string = pyte.image_to_string(image, config=tesseract_config)
+    result_string = pytesseract.image_to_string(image, config=tesseract_config)
     pyperclip.copy(result_string)
 
     is_screenshot_valid = False
@@ -40,7 +40,7 @@ def on_update_dummy():
 
 
 def main():
-    pyte.pytesseract.tesseract_cmd = tesseract_path
+    pytesseract.pytesseract.tesseract_cmd = tesseract_path
 
     clipboard_monitor.on_image(on_clipboard_image_update)
     clipboard_monitor.on_update(lambda: None)
